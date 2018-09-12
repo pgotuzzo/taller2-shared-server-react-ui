@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/pgotuzzo/taller2-shared-server-react-ui.svg?branch=master)](https://travis-ci.org/pgotuzzo/taller2-shared-server-react-ui)
+
 # Interfaz WEB
 
 La interfaz WEB deberá brindar una GUI que permita la administración de archivos y de application servers. A continuación se da una breve descripción de la funcionalidad deseada para la interfaz WEB del Shared Server.
