@@ -1,30 +1,43 @@
-var Session = (function () {
+var SessionSingleton = (function () {
     function Session() {
+        // Properties
         this.token = "";
         this.userName = "";
+
+        // Public methods
+        this.loadExisting = function () {
+            this.userName = sessionStorage.getItem(Session.storageUserName);
+            this.token = sessionStorage.getItem(Session.storageToken);
+        };
 
         this.create = function (token, userName) {
             this.token = token;
             this.userName = userName;
+            store(this.userName, this.token);
         };
 
         this.reset = function () {
             this.token = "";
             this.userName = "";
+            store(this.userName, this.token);
         };
 
         this.isSigned = function () {
-            return this.token !== "" && this.userName !== "";
+            const tokenCheck = this.token !== null && this.token !== "";
+            const userNameCheck = this.userName !== null && this.userName !== "";
+            return tokenCheck && userNameCheck;
         };
 
-        this.getToken = function () {
-            return this.token;
-        };
-
-        this.getUserName = function () {
-            return this.userName;
-        };
+        // Private methods
+        var store = function (userName, token) {
+            sessionStorage.setItem(Session.storageUserName, userName);
+            sessionStorage.setItem(Session.storageToken, token);
+        }
     }
+
+    Session.tag = "Session";
+    Session.storageUserName = Session.tag + "_userName";
+    Session.storageToken = Session.tag + "_token";
 
     var _instance;
     return {
@@ -38,3 +51,5 @@ var Session = (function () {
         }
     };
 })();
+
+export default SessionSingleton;
