@@ -1,0 +1,57 @@
+body {
+    background-color: rgb(42, 42, 46);
+}
+
+.main-outer {
+    width: 700px;
+    height: 350px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: -350px;
+    margin-top: -175px;
+    border-radius: 3px;
+    border: 2px solid rgb(249, 249, 250);
+}
+
+.main-inner {
+    background-color: rgb(56, 56, 61);
+    text-align: center;
+    width: 100%;
+    height: 100%;
+}
+
+.main-inner span {
+    color: #A0A0A0;
+    font-size: 25px;
+}
+
+.main-inner .main-inner-title {
+    display: block;
+    font-size: 50px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.main-inner input {
+    background-color: rgb(42, 42, 46);
+    display: block;
+    margin: 10px auto;
+    border-radius: 3px;
+    border: transparent;
+    width: 50%;
+    text-align: center;
+    color: #FFFFFF;
+    height: 40px;
+    font-size: 20px;
+}
+
+.main-inner-input-div {
+    margin-top: 40px;
+}
+
+.main-inner-input-btn {
+    width: 80px;
+    height: 80px;
+    margin-top: 10px;
+}

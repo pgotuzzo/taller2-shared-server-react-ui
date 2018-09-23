@@ -1,13 +1,13 @@
-var SessionSingleton = (function () {
-    function Session() {
+export var SessionSingleton = (function () {
+    function SessionContract() {
         // Properties
         this.token = "";
         this.userName = "";
 
         // Public methods
         this.loadExisting = function () {
-            this.userName = sessionStorage.getItem(Session.storageUserName);
-            this.token = sessionStorage.getItem(Session.storageToken);
+            this.userName = sessionStorage.getItem(SessionContract.storageUserName);
+            this.token = sessionStorage.getItem(SessionContract.storageToken);
         };
 
         this.create = function (token, userName) {
@@ -30,20 +30,20 @@ var SessionSingleton = (function () {
 
         // Private methods
         var store = function (userName, token) {
-            sessionStorage.setItem(Session.storageUserName, userName);
-            sessionStorage.setItem(Session.storageToken, token);
+            sessionStorage.setItem(SessionContract.storageUserName, userName);
+            sessionStorage.setItem(SessionContract.storageToken, token);
         }
     }
 
-    Session.tag = "Session";
-    Session.storageUserName = Session.tag + "_userName";
-    Session.storageToken = Session.tag + "_token";
+    SessionContract.tag = "Session";
+    SessionContract.storageUserName = SessionContract.tag + "_userName";
+    SessionContract.storageToken = SessionContract.tag + "_token";
 
     var _instance;
     return {
         getInstance: function () {
             if (_instance == null) {
-                _instance = new Session();
+                _instance = new SessionContract();
                 // Hide the constructor so the returned objected can't be new'd...
                 _instance.constructor = null;
             }
@@ -51,5 +51,3 @@ var SessionSingleton = (function () {
         }
     };
 })();
-
-export default SessionSingleton;
