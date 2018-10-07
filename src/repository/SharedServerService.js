@@ -4,17 +4,39 @@ export var SharedServerServiceSingleton = (function () {
         // Public methods
         this.getToken = function (userName, password, promise) {
             const url = baseUrl + endpointToken;
+            const data = {
+                username: userName,
+                password: password
+            };
+            fetch(url, {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            }).then(promise);
+        };
+
+        this.getDeliveries = function (promise) {
+            const url = baseUrl + endpointDeliveries;
             fetch(url).then(promise);
         };
 
-        this.getEnvios = function (promise) {
-            const url = baseUrl + endpointEnvios;
+        this.getDelivery = function (deliveryId, promise) {
+            const url = baseUrl + endpointDelivery + deliveryId;
             fetch(url).then(promise);
+        };
+
+        this.setDeliveryState = function (deliveryStatus, promise) {
+            // TODO - Implementar
+            // const url = baseUrl + endpointDelivery + deliveryId;
+            // fetch(url).then(promise);
         };
 
         const baseUrl = "https://shared-server-tallerii.herokuapp.com";
         const endpointToken = "/user/token";
-        const endpointEnvios = "/envios";
+        const endpointDeliveries = "/tracking";
+        const endpointDelivery = "/tracking/";
     }
 
     var _instance;

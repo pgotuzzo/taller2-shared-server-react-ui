@@ -3,7 +3,7 @@ import {BrowserRouter as Router, Route} from "react-router-dom";
 import Login from "./login/Login";
 import Dashboard from "./dashboard/Dashboard";
 import {Logger, Session} from "../di";
-import Envios from "./envios/Envios";
+import Envios from "./deliveries/Deliveries";
 import Toast from "./alert/Toast";
 import "./App.css";
 

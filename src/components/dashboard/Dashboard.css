@@ -1,0 +1,100 @@
+header .box {
+    height: 50px;
+    width: 100%;
+    position: relative;
+    border-bottom: solid black 2px;
+    display: flex;
+    background-color: #292929;
+}
+
+header .box-left {
+    width: 150px;
+    height: 100%;
+    float: left;
+}
+
+header .box-left .user-img {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    margin-top: -20px;
+    margin-right: 20px;
+    width: 40px;
+    height: 40px;
+}
+
+header .box-center {
+    display: inline-block;
+    width: auto;
+    height: 100%;
+    flex: 1;
+}
+
+header .box-right {
+    width: 200px;
+    height: 100%;
+    float: right;
+}
+
+header .box-left span {
+    position: absolute;
+    top: 50%;
+    color: #000000;
+    left: 40px;
+    margin-top: -10px;
+    font-size: 20px;
+}
+
+header .sign-out-btn {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    margin-top: -20px;
+    margin-right: 20px;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+}
+
+header .sign-out-label {
+    position: absolute;
+    top: 50%;
+    color: #AB0000;
+    right: 65px;
+    margin-top: -7.5px;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+header .box-center div {
+    position: relative;
+    display: inline-block;
+    height: 100%;
+    width: 20%;
+    cursor: pointer;
+}
+
+header .box-center .option span {
+    position: absolute;
+    font-size: 20px;
+    color: white;
+    top: 50%;
+    margin-top: -10px;
+    width: 100%;
+    text-align: center;
+}
+
+header .box-center .option-selected {
+    background-color: rgba(50, 50, 50, 128);
+}
+
+header .box-center .option-selected span {
+    position: absolute;
+    font-size: 20px;
+    color: #0088D7;
+    top: 50%;
+    margin-top: -10px;
+    width: 100%;
+    text-align: center;
+}
+

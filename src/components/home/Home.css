@@ -1,0 +1,15 @@
+.option-box {
+    position: relative;
+    width: 50%;
+    margin: 50px auto auto;
+    text-align: center;
+}
+
+.option-box h2 {
+    color: #F48024;
+}
+
+.option-box span {
+    color: #EFF0F1;
+    font-size: 20px;
+}

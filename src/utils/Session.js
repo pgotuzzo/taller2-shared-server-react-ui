@@ -28,6 +28,10 @@ export var SessionSingleton = (function () {
             return tokenCheck && userNameCheck;
         };
 
+        this.getUserName = function () {
+            return this.userName;
+        };
+
         // Private methods
         var store = function (userName, token) {
             sessionStorage.setItem(SessionContract.storageUserName, userName);

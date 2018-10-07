@@ -8,7 +8,7 @@ export var SharedServerServiceMockSingleton = (function () {
                 init = {"status": 201};
                 data = {
                     metadata: {
-                        version: "string"
+                        version: "0.1"
                     },
                     token: {
                         expiresAt: 0,
@@ -27,27 +27,46 @@ export var SharedServerServiceMockSingleton = (function () {
             promise(response);
         };
 
-        this.getEnvios = function (promise) {
+        this.getDeliveries = function (promise) {
             let init;
             let data;
             init = {"status": 201};
-            data = {
-                state: "OK",
-                data: [
-                    {
-                        id: 2, estado: "PENDIENTE", desde: "aca", hasta: "alla"
-                    },
-                    {
-                        id: 1, estado: "EN_TRANSITO", desde: "aca", hasta: "alla"
-                    },
-                    {
-                        id: 5, estado: "PENDIENTE", desde: "local", hasta: "heroku"
-                    }
-                ]
-            };
+            data = [
+                {
+                    id: 2, status: "PENDIENTE", updateat: "2018-09-26T00:00:00.000Z"
+                },
+                {
+                    id: 1, status: "EN_TRANSITO", updateat: "2018-09-26T00:00:00.000Z"
+                },
+                {
+                    id: 5, status: "PENDIENTE", updateat: "2018-09-26T00:00:00.000Z"
+                }];
             const blob = new Blob([JSON.stringify(data, null, 2)], {type: 'application/json'});
             const response = new Response(blob, init);
             promise(response);
+        };
+
+        this.getDelivery = function (deliveryId, promise) {
+            // TODO - Implementar
+            // const init = {"status": 201};
+            // const data = {
+            //     metadata: {
+            //         version: "string"
+            //     },
+            //     token: {
+            //         expiresAt: 0,
+            //         token: "soy_token_mocked"
+            //     }
+            // };
+            // const blob = new Blob([JSON.stringify(data, null, 2)], {type: 'application/json'});
+            // const response = new Response(blob, init);
+            // promise(response);
+        };
+
+        this.setDeliveryState = function (deliveryStatus, promise) {
+            // TODO - Implementar
+            // const url = baseUrl + endpointDelivery + deliveryId;
+            // fetch(url).then(promise);
         };
 
     }
@@ -63,4 +82,5 @@ export var SharedServerServiceMockSingleton = (function () {
             return _instance;
         }
     };
-})();
+})
+();
