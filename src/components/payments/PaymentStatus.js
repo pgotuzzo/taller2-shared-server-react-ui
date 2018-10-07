@@ -1,34 +1,33 @@
 import React, {Component} from 'react';
 import {SharedServerService} from "../../di";
 
-export default class DeliveryEdit extends Component {
+export default class PaymentStatus extends Component {
 
-    OPTIONS = {PENDING: "PENDIENTE", IN_TRANSIT: "EN_TRANSITO", DELIVERED: "ENTREGADO", CANCELED: "CANCELADO"};
+    OPTIONS = {PAYED: "PAGADO", PENDING: "PENDIENTE", CANCELED: "CANCELADO"};
 
     constructor(props) {
         super(props);
         // Initial State
         this.state = {current: null};
-        // Event Listeners
-        this.fetchHistory = this.fetchHistory.bind(this);
+        // Events Listeners
+        this.fetchPayment = this.fetchPayment.bind(this);
         this.onStatusSelected = this.onStatusSelected.bind(this);
     }
 
     componentDidMount() {
-        this.fetchHistory();
+        this.fetchPayment();
     }
 
-    fetchHistory() {
-        SharedServerService.getDelivery(this.props.deliveryId, response => {
+    fetchPayment() {
+        SharedServerService.getPayment(this.props.paymentId, response => {
             if (response.ok) {
                 response.json().then((data) => {
-                    const status = data[0].status;
-                    this.setState({current: status});
+                    this.setState({current: data.status});
                 });
             } else {
                 response.json().then(() => {
-                    const title = "Fallo la carga de estados!";
-                    const desc = "Por favor vuelva a intentarlo nuevamente!";
+                    // const title = "Fallo la carga del estado actual!";
+                    // const desc = "Por favor vuelva a intentarlo nuevamente!";
                     // this.props.showToast(title, desc);
                 });
             }
@@ -37,7 +36,7 @@ export default class DeliveryEdit extends Component {
 
     onStatusSelected(event) {
         const status = event.target.value;
-        SharedServerService.setDeliveryStatus(this.props.deliveryId, status, response => {
+        SharedServerService.setPaymentStatus(this.props.paymentId, status, response => {
             if (response.ok) {
                 response.json().then(() => {
                     this.setState({current: status});
@@ -61,13 +60,12 @@ export default class DeliveryEdit extends Component {
                         <th>Estado Actual</th>
                     </tr>
                     <tr>
-                        <td>{this.props.deliveryId}</td>
+                        <td>{this.props.paymentId}</td>
                         <td className={"editItem"}>
                             <select value={this.state.current}
                                     onChange={this.onStatusSelected}>
+                                <option value={this.OPTIONS.PAYED}>{this.OPTIONS.PAYED}</option>
                                 <option value={this.OPTIONS.PENDING}>{this.OPTIONS.PENDING}</option>
-                                <option value={this.OPTIONS.IN_TRANSIT}>{this.OPTIONS.IN_TRANSIT}</option>
-                                <option value={this.OPTIONS.DELIVERED}>{this.OPTIONS.DELIVERED}</option>
                                 <option value={this.OPTIONS.CANCELED}>{this.OPTIONS.CANCELED}</option>
                             </select>
                         </td>
@@ -76,4 +74,4 @@ export default class DeliveryEdit extends Component {
             </div>
             : null;
     }
-}
+};

@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {SharedServerService} from "../../di";
-import "./Deliveries.css"
 import EditImg from "../../images/ic_settings.png";
 import InfoImg from "../../images/ic_info.png";
 import DeliveryHistory from "./DeliveryHistory";
@@ -98,7 +97,7 @@ export default class Deliveries extends Component {
                     <tr>
                         <th>ID</th>
                         <th>Estado Actual</th>
-                        <th>Modificar</th>
+                        <th>Actualizar</th>
                         <th>Historial</th>
                     </tr>
                     {deliveries}

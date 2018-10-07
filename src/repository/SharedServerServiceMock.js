@@ -28,10 +28,8 @@ export var SharedServerServiceMockSingleton = (function () {
         };
 
         this.getDeliveries = function (promise) {
-            let init;
-            let data;
-            init = {"status": 201};
-            data = [
+            const init = {"status": 201};
+            const data = [
                 {
                     id: 2, status: "PENDIENTE", updateat: "2018-09-26T00:00:00.000Z"
                 },
@@ -47,28 +45,94 @@ export var SharedServerServiceMockSingleton = (function () {
         };
 
         this.getDelivery = function (deliveryId, promise) {
-            // TODO - Implementar
-            // const init = {"status": 201};
-            // const data = {
-            //     metadata: {
-            //         version: "string"
-            //     },
-            //     token: {
-            //         expiresAt: 0,
-            //         token: "soy_token_mocked"
-            //     }
-            // };
-            // const blob = new Blob([JSON.stringify(data, null, 2)], {type: 'application/json'});
-            // const response = new Response(blob, init);
-            // promise(response);
+            const init = {"status": 201};
+            const data = [
+                {
+                    id: deliveryId,
+                    status: "PENDIENTE",
+                    updateat: "2018-03-01T00:00:00.000Z"
+                },
+                {
+                    id: deliveryId,
+                    status: "EN_TRANSITO",
+                    updateat: "2018-10-07T00:00:00.000Z"
+                }
+            ];
+            const blob = new Blob([JSON.stringify(data, null, 2)], {type: 'application/json'});
+            const response = new Response(blob, init);
+            promise(response);
         };
 
-        this.setDeliveryState = function (deliveryStatus, promise) {
-            // TODO - Implementar
-            // const url = baseUrl + endpointDelivery + deliveryId;
-            // fetch(url).then(promise);
+        this.setDeliveryStatus = function (deliveryId, deliveryStatus, promise) {
+            const init = {"status": 201};
+            const data = [];
+            const blob = new Blob([JSON.stringify(data, null, 2)], {type: 'application/json'});
+            const response = new Response(blob, init);
+            promise(response);
         };
 
+        this.getPayments = function (promise) {
+            const init = {"status": 201};
+            const data = [
+                {
+                    transaction_id: "101",
+                    currency: "AR",
+                    value: 15000,
+                    paymentMethod: {
+                        epiration_month: "9",
+                        expiration_year: "2019",
+                        method: "Tarjeta",
+                        number: "1",
+                        type: "VISA-Debito"
+                    },
+                    status: "PENDIENTE"
+                },
+                {
+                    transaction_id: "289",
+                    currency: "US",
+                    value: 56,
+                    paymentMethod: {
+                        epiration_month: "1",
+                        expiration_year: "2020",
+                        method: "Tarjeta",
+                        number: "2",
+                        type: "MasterCard-Credito"
+                    },
+                    status: "PENDIENTE"
+                }
+            ];
+            const blob = new Blob([JSON.stringify(data, null, 2)], {type: 'application/json'});
+            const response = new Response(blob, init);
+            promise(response);
+        };
+
+        this.getPayment = function (paymentId, promise) {
+            const init = {"status": 201};
+            const data = {
+                transaction_id: "289",
+                currency: "US",
+                value: 56,
+                paymentMethod: {
+                    epiration_month: "1",
+                    expiration_year: "2020",
+                    method: "Tarjeta",
+                    number: "2",
+                    type: "MasterCard-Credito"
+                },
+                status: "PENDIENTE"
+            };
+            const blob = new Blob([JSON.stringify(data, null, 2)], {type: 'application/json'});
+            const response = new Response(blob, init);
+            promise(response);
+        };
+
+        this.setPaymentStatus = function (paymentId, paymentStatus, promise) {
+            const init = {"status": 201};
+            const data = [];
+            const blob = new Blob([JSON.stringify(data, null, 2)], {type: 'application/json'});
+            const response = new Response(blob, init);
+            promise(response);
+        }
     }
 
     var _instance;

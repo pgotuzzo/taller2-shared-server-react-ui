@@ -5,6 +5,7 @@ import UserImg from "../../images/ic_user.png";
 import {Session} from "../../di";
 import Home from "../home/Home";
 import Deliveries from "../deliveries/Deliveries";
+import Payments from "../payments/Payments";
 
 export default class Dashboard extends Component {
 
@@ -40,6 +41,7 @@ export default class Dashboard extends Component {
                 homeClass = selectedClass;
                 break;
             case this.SECTIONS.PAYMENTS:
+                content = <Payments/>;
                 paymentClass = selectedClass;
                 break;
             case this.SECTIONS.DELIVERIES:
