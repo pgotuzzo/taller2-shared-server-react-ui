@@ -108,7 +108,7 @@ export var SharedServerServiceMockSingleton = (function () {
 
         this.getPayment = function (paymentId, promise) {
             const init = {"status": 201};
-            const data = {
+            const data = [{
                 transaction_id: "289",
                 currency: "US",
                 value: 56,
@@ -117,10 +117,9 @@ export var SharedServerServiceMockSingleton = (function () {
                     expiration_year: "2020",
                     method: "Tarjeta",
                     number: "2",
-                    type: "MasterCard-Credito"
                 },
                 status: "PENDIENTE"
-            };
+            }];
             const blob = new Blob([JSON.stringify(data, null, 2)], {type: 'application/json'});
             const response = new Response(blob, init);
             promise(response);

@@ -3,23 +3,39 @@ import {SharedServerService} from "../../di";
 
 export default class PaymentMethod extends Component {
 
-    constructor(props) {
-        super(props);
-        // Initial State
-        this.state = {method: null};
-        // Events Listeners
-        this.fetchPayment = this.fetchPayment.bind(this);
-    }
+    safeProperty = function (obj, name) {
+        return obj.hasOwnProperty(name) ? obj[name] : null;
+    };
 
     componentDidMount() {
         this.fetchPayment();
+    }
+
+    constructor(props) {
+        super(props);
+        // Initial State
+        this.state = {
+            type: null,
+            expiration_month: null,
+            expiration_year: null,
+            card_number: null
+        };
+        // Events Listeners
+        this.fetchPayment = this.fetchPayment.bind(this);
     }
 
     fetchPayment() {
         SharedServerService.getPayment(this.props.paymentId, response => {
             if (response.ok) {
                 response.json().then((data) => {
-                    this.setState({method: data.paymentMethod});
+                    const payment = data[0];
+                    this.setState(
+                        {
+                            type: payment.paymentMethod.method,
+                            expiration_month: this.safeProperty(payment.paymentMethod, "expiration_month"),
+                            expiration_year: this.safeProperty(payment.paymentMethod, "expiration_year"),
+                            card_number: this.safeProperty(payment.paymentMethod, "number")
+                        });
                 });
             } else {
                 response.json().then(() => {
@@ -32,26 +48,35 @@ export default class PaymentMethod extends Component {
     }
 
     render() {
-        return (this.state.method !== null) ?
-            <div>
-                <table>
-                    <tr>
-                        <th>Id</th>
-                        <th>Fecha de vencimiento</th>
-                        <th>Medio</th>
-                        <th>Tipo</th>
-                        <th>Numero</th>
-                    </tr>
-                    <tr>
-                        <td>{this.props.paymentId}</td>
-                        <td>{this.state.method.epiration_month + "/" + this.state.method.expiration_year}</td>
-                        <td>{this.state.method.method}</td>
-                        <td>{this.state.method.type}</td>
-                        <td>{this.state.method.number}</td>
-                    </tr>
-                </table>
+        let expirationHeader = null;
+        let expirationContent = null;
+        if (this.state.expiration_month !== null && this.state.expiration_year !== null) {
+            expirationHeader = <th>Fecha de vencimiento</th>;
+            expirationContent =
+                <td>{this.state.expiration_month + "/" + this.state.expiration_year}</td>;
+        }
+        let cardNumberHeader = null;
+        let cardNumberContent = null;
+        if (this.state.card_number !== null) {
+            cardNumberHeader = <th>Numero de tarjeta</th>;
+            cardNumberContent = <td>{this.state.card_number}</td>;
+        }
+        return <div>
+            <table>
+                <tr>
+                    <th>Id</th>
+                    <th>Tipo</th>
+                    {expirationHeader}
+                    {cardNumberHeader}
+                </tr>
+                <tr>
+                    <td>{this.props.paymentId}</td>
+                    <td>{this.state.type}</td>
+                    {expirationContent}
+                    {cardNumberContent}
+                </tr>
+            </table>
 
-            </div>
-            : null;
+        </div>;
     }
 };

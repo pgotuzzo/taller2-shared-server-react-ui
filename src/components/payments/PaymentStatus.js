@@ -22,7 +22,8 @@ export default class PaymentStatus extends Component {
         SharedServerService.getPayment(this.props.paymentId, response => {
             if (response.ok) {
                 response.json().then((data) => {
-                    this.setState({current: data.status});
+                    const payment = data[0];
+                    this.setState({current: payment.status});
                 });
             } else {
                 response.json().then(() => {
