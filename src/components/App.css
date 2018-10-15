@@ -34,7 +34,7 @@ td {
 
 .img-btn {
     width: 25px;
-    display: block;
+    display: inline-block;
     margin: 0 auto;
     cursor: pointer;
 }

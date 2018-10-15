@@ -131,7 +131,64 @@ export var SharedServerServiceMockSingleton = (function () {
             const blob = new Blob([JSON.stringify(data, null, 2)], {type: 'application/json'});
             const response = new Response(blob, init);
             promise(response);
-        }
+        };
+
+        this.getAppServers = function (promise) {
+            const init = {"status": 200};
+            const data = {
+                metadata: {
+                    version: 1,
+                    total: 2
+                },
+                servers: [
+                    {
+                        id: 1,
+                        _rev: "0",
+                        createdBy: "Damian",
+                        createdTime: "2018-10-11T20:14:12.700Z",
+                        name: "server1",
+                        lastConnection: null
+                    },
+                    {
+                        id: 2,
+                        _rev: "0",
+                        createdBy: "Pablo",
+                        createdTime: "2018-10-15T12:53:41.511Z",
+                        name: "pablo1",
+                        lastConnection: null
+                    }
+                ]
+            };
+            const blob = new Blob([JSON.stringify(data, null, 2)], {type: 'application/json'});
+            const response = new Response(blob, init);
+            promise(response);
+        };
+
+        this.addAppServers = function (userName, serverName, promise) {
+            const init = {"status": 200};
+            const data = {
+                metadata: {
+                    version: 1
+                },
+                server: {
+                    token: {
+                        expiresAt: 0,
+                        token: "12345678"
+                    },
+                    server: {
+                        id: 2,
+                        _rev: "0",
+                        createdBy: "Pablo",
+                        createdTime: "2018-10-15T12:53:41.511Z",
+                        name: "pablo1",
+                        lastConnection: null
+                    }
+                }
+            };
+            const blob = new Blob([JSON.stringify(data, null, 2)], {type: 'application/json'});
+            const response = new Response(blob, init);
+            promise(response);
+        };
     }
 
     var _instance;

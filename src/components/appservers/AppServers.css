@@ -1,0 +1,50 @@
+.add-btn-box {
+    display: inline-block;
+    position: relative;
+    margin-top: 20px;
+    left: 30%;
+    cursor: pointer;
+}
+
+.add-btn-box span {
+    color: #FFFFFF;
+    height: 100%;
+    text-align: center;
+    left: 10px;
+    bottom: 5px;
+    position: relative;
+}
+
+.add-server-modal-box {
+    background-color: rgb(56, 56, 61);
+    position: absolute;
+    width: 40%;
+    top: 25%;
+    left: 30%;
+    border: transparent;
+    border-radius: 3px;
+    padding: 20px;
+}
+
+.add-server-modal-box input {
+    background-color: rgb(42, 42, 46);
+    display: inline-block;
+    border-radius: 3px;
+    border: transparent;
+    width: 90%;
+    margin: 0 auto;
+    text-align: center;
+    color: #FFFFFF;
+    height: 40px;
+    font-size: 20px;
+}
+
+.add-server-modal-box img {
+    position: absolute;
+    display: inline-block;
+    height: 30px;
+    top: 50%;
+    margin-top: -15px;
+    margin-left: 20px;
+    cursor: pointer;
+}

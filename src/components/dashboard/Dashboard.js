@@ -6,6 +6,7 @@ import {Session} from "../../di";
 import Home from "../home/Home";
 import Deliveries from "../deliveries/Deliveries";
 import Payments from "../payments/Payments";
+import AppServers from "../appservers/AppServers";
 
 export default class Dashboard extends Component {
 
@@ -49,6 +50,7 @@ export default class Dashboard extends Component {
                 deliveryClass = selectedClass;
                 break;
             case this.SECTIONS.APP_SERVERS:
+                content = <AppServers showToast={this.props.showToast}/>;
                 appServerClass = selectedClass;
                 break;
             case this.SECTIONS.ANALYTICS:

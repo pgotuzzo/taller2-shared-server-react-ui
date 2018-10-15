@@ -67,13 +67,34 @@ export var SharedServerServiceSingleton = (function () {
             }).then(promise);
         };
 
+        this.getAppServers = function (promise) {
+            const url = BASE_URL + ENDPOINT.APP_SERVERS;
+            fetch(url).then(promise);
+        };
+
+        this.addAppServers = function (userName, serverName, promise) {
+            const url = BASE_URL + ENDPOINT.APP_SERVERS;
+            const data = {
+                createdBy: userName,
+                name: serverName
+            };
+            fetch(url, {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            }).then(promise);
+        };
+
         const BASE_URL = "https://shared-server-tallerii.herokuapp.com";
         const ENDPOINT = {
             TOKEN: "/user/token/",
             DELIVERIES: "/tracking/",
             PAYMENTS: "/payments/",
             PAYMENTS_BY_ID: "/payments/id/",
-            PAYMENTS_METHODS: "/payments/methods/"
+            PAYMENTS_METHODS: "/payments/methods/",
+            APP_SERVERS: "/servers/"
         }
 
     }
