@@ -1,3 +1,5 @@
+import {Session} from "../di";
+
 export var SharedServerServiceSingleton = (function () {
     function SharedServerService() {
 
@@ -19,12 +21,22 @@ export var SharedServerServiceSingleton = (function () {
 
         this.getDeliveries = function (promise) {
             const url = BASE_URL + ENDPOINT.DELIVERIES;
-            fetch(url).then(promise);
+            fetch(url, {
+				headers: new Headers({
+                    'Content-Type': 'application/json',
+					'Authorization': 'Bearer ' + Session.token
+                })
+			}).then(promise);
         };
 
         this.getDelivery = function (deliveryId, promise) {
             const url = BASE_URL + ENDPOINT.DELIVERIES + deliveryId;
-            fetch(url).then(promise);
+            fetch(url, {
+				headers: new Headers({
+                    'Content-Type': 'application/json',
+					'Authorization': 'Bearer ' + Session.token
+                })
+			}).then(promise);
         };
 
         this.setDeliveryStatus = function (deliveryId, deliveryStatus, promise) {
@@ -36,7 +48,8 @@ export var SharedServerServiceSingleton = (function () {
             fetch(url, {
                 method: "PUT",
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+					'Authorization': 'Bearer ' + Session.token
                 },
                 body: JSON.stringify(data)
             }).then(promise);
@@ -44,12 +57,22 @@ export var SharedServerServiceSingleton = (function () {
 
         this.getPayments = function (promise) {
             const url = BASE_URL + ENDPOINT.PAYMENTS;
-            fetch(url).then(promise);
+            fetch(url, {
+				headers: new Headers({
+                    'Content-Type': 'application/json',
+					'Authorization': 'Bearer ' + Session.token
+                })
+			}).then(promise);
         };
 
         this.getPayment = function (paymentId, promise) {
             const url = BASE_URL + ENDPOINT.PAYMENTS_BY_ID + paymentId;
-            fetch(url).then(promise);
+            fetch(url, {
+				headers: new Headers({
+                    'Content-Type': 'application/json',
+					'Authorization': 'Bearer ' + Session.token
+                })
+			}).then(promise);
         };
 
         this.setPaymentStatus = function (paymentId, paymentStatus, promise) {
@@ -61,7 +84,8 @@ export var SharedServerServiceSingleton = (function () {
             fetch(url, {
                 method: "PUT",
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+					'Authorization': 'Bearer ' + Session.token
                 },
                 body: JSON.stringify(data)
             }).then(promise);
@@ -69,7 +93,12 @@ export var SharedServerServiceSingleton = (function () {
 
         this.getAppServers = function (promise) {
             const url = BASE_URL + ENDPOINT.APP_SERVERS;
-            fetch(url).then(promise);
+            fetch(url, {
+				headers: new Headers({
+                    'Content-Type': 'application/json',
+					'Authorization': 'Bearer ' + Session.token
+                })
+			}).then(promise);
         };
 
         this.addAppServers = function (userName, serverName, promise) {
@@ -81,7 +110,8 @@ export var SharedServerServiceSingleton = (function () {
             fetch(url, {
                 method: "POST",
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+					'Authorization': 'Bearer ' + Session.token
                 },
                 body: JSON.stringify(data)
             }).then(promise);
