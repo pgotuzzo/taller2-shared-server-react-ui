@@ -119,7 +119,7 @@ export var SharedServerServiceSingleton = (function () {
 
         const BASE_URL = "https://shared-server-tallerii.herokuapp.com";
         const ENDPOINT = {
-            TOKEN: "/user/token/",
+            TOKEN: "/user/token",
             DELIVERIES: "/tracking/",
             PAYMENTS: "/payments/",
             PAYMENTS_BY_ID: "/payments/id/",
