@@ -117,6 +117,17 @@ export var SharedServerServiceSingleton = (function () {
             }).then(promise);
         };
 
+		this.deleteAppServer = function (serverId, promise) {
+			const url = BASE_URL + ENDPOINT.APP_SERVERS + serverId;
+			fetch(url, {
+				method: "DELETE",
+				headers: new Headers({
+                    'Content-Type': 'application/json',
+					'Authorization': 'Bearer ' + Session.token
+                })
+			}).then(promise);
+		}
+
         const BASE_URL = "https://shared-server-tallerii.herokuapp.com";
         const ENDPOINT = {
             TOKEN: "/user/token",

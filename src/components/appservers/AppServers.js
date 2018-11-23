@@ -5,6 +5,7 @@ import RemoveImg from "../../images/ic_trash.png";
 import EditImg from "../../images/ic_settings.png";
 import AddImg from "../../images/ic_add.png";
 import AddServer from "./AddServer";
+import DeleteServer from "./DeleteServer";
 
 export default class AppServers extends Component {
 
@@ -112,7 +113,7 @@ export default class AppServers extends Component {
                     // popUp = <EditServer/>;
                     break;
                 case this.POP_UP_TYPE.REMOVE:
-                    // popUp = <ConfirmModal/>;
+                    popUp = <DeleteServer serverId={this.state.popUp.serverId} dismiss={this.onPopUpDismiss}/>;
                     break;
                 default:
                     popUp = null;
