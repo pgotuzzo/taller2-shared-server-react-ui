@@ -6,6 +6,7 @@ import EditImg from "../../images/ic_settings.png";
 import AddImg from "../../images/ic_add.png";
 import AddServer from "./AddServer";
 import DeleteServer from "./DeleteServer";
+import UpdateServer from "./UpdateServer";
 
 export default class AppServers extends Component {
 
@@ -57,12 +58,14 @@ export default class AppServers extends Component {
         });
     }
 
-    editServer(serverId) {
+    editServer(serverId, name, rev) {
         this.setState({
             popUp: {
                 show: true,
                 type: this.POP_UP_TYPE.EDIT,
-                serverId: serverId
+                serverId: serverId,
+				serverName: name,
+				serverRev: rev
             }
         });
     }
@@ -98,7 +101,7 @@ export default class AppServers extends Component {
                 <td>{item.createdTime}</td>
                 <td>{item.lastConnection}</td>
                 <td><img className={"img-btn"} alt="" src={EditImg}
-                         onClick={() => this.editServer(item.id)}/></td>
+                         onClick={() => this.editServer(item.id, item.name, item._rev)}/></td>
                 <td><img className={"img-btn"} alt="" src={RemoveImg}
                          onClick={() => this.removeServer(item.id)}/></td>
             </tr>
@@ -110,7 +113,7 @@ export default class AppServers extends Component {
                     popUp = <AddServer dismiss={this.onPopUpDismiss}/>;
                     break;
                 case this.POP_UP_TYPE.EDIT:
-                    // popUp = <EditServer/>;
+                    popUp = <UpdateServer serverId={this.state.popUp.serverId} serverName={this.state.popUp.serverName} rev={this.state.popUp.serverRev} dismiss={this.onPopUpDismiss}/>;
                     break;
                 case this.POP_UP_TYPE.REMOVE:
                     popUp = <DeleteServer serverId={this.state.popUp.serverId} dismiss={this.onPopUpDismiss}/>;

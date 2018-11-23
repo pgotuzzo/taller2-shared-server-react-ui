@@ -128,6 +128,22 @@ export var SharedServerServiceSingleton = (function () {
 			}).then(promise);
 		}
 
+		this.updateAppServer = function (serverId, serverName, rev, promise) {
+			const url = BASE_URL + ENDPOINT.APP_SERVERS + serverId;
+			const data = {
+				name: serverName,
+				_rev: rev
+			}
+			fetch(url, {
+				method: "PUT",
+				headers: new Headers({
+                    'Content-Type': 'application/json',
+					'Authorization': 'Bearer ' + Session.token
+                }),
+                body: JSON.stringify(data)
+			}).then(promise);
+		}
+
         const BASE_URL = "https://shared-server-tallerii.herokuapp.com";
         const ENDPOINT = {
             TOKEN: "/user/token",
