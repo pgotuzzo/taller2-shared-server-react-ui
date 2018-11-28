@@ -40,9 +40,9 @@ export default class AppServers extends Component {
                     this.setState({servers: data.servers});
                 });
             } else {
-                response.json().then(() => {
+                response.json().then((data) => {
                     const title = "Fallo la carga de app servers!";
-                    const desc = "Por favor vuelva a intentarlo nuevamente!";
+                    const desc = data.message;
                     this.props.showToast(title, desc);
                 });
             }
@@ -110,13 +110,13 @@ export default class AppServers extends Component {
         if (this.state.popUp.show) {
             switch (this.state.popUp.type) {
                 case this.POP_UP_TYPE.ADD:
-                    popUp = <AddServer dismiss={this.onPopUpDismiss}/>;
+                    popUp = <AddServer dismiss={this.onPopUpDismiss} showToast={this.props.showToast}/>;
                     break;
                 case this.POP_UP_TYPE.EDIT:
-                    popUp = <UpdateServer serverId={this.state.popUp.serverId} serverName={this.state.popUp.serverName} rev={this.state.popUp.serverRev} dismiss={this.onPopUpDismiss}/>;
+                    popUp = <UpdateServer serverId={this.state.popUp.serverId} serverName={this.state.popUp.serverName} rev={this.state.popUp.serverRev} dismiss={this.onPopUpDismiss} showToast={this.props.showToast}/>;
                     break;
                 case this.POP_UP_TYPE.REMOVE:
-                    popUp = <DeleteServer serverId={this.state.popUp.serverId} dismiss={this.onPopUpDismiss}/>;
+                    popUp = <DeleteServer serverId={this.state.popUp.serverId} dismiss={this.onPopUpDismiss} showToast={this.props.showToast}/>;
                     break;
                 default:
                     popUp = null;

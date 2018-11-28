@@ -37,10 +37,10 @@ export default class Payments extends Component {
                     this.setState({payments: data});
                 });
             } else {
-                response.json().then(() => {
+                response.json().then((data) => {
                     const title = "Fallo la carga de pagos!";
-                    const desc = "Por favor vuelva a intentarlo nuevamente!";
-                    // this.props.showToast(title, desc);
+                    const desc = data.message;
+                    this.props.showToast(title, desc);
                 });
             }
         });
@@ -92,10 +92,10 @@ export default class Payments extends Component {
         if (this.state.popUp.show) {
             switch (this.state.popUp.type) {
                 case this.POP_UP_TYPE.PAYMENT_METHOD:
-                    popUp = <PaymentMethod paymentId={this.state.popUp.paymentId}/>;
+                    popUp = <PaymentMethod paymentId={this.state.popUp.paymentId} showToast={this.props.showToast}/>;
                     break;
                 case this.POP_UP_TYPE.EDIT_STATUS:
-                    popUp = <PaymentStatus paymentId={this.state.popUp.paymentId}/>;
+                    popUp = <PaymentStatus paymentId={this.state.popUp.paymentId} showToast={this.props.showToast}/>;
                     break;
                 default:
                     popUp = null;

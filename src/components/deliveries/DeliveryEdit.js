@@ -26,10 +26,10 @@ export default class DeliveryEdit extends Component {
                     this.setState({current: status});
                 });
             } else {
-                response.json().then(() => {
+                response.json().then((data) => {
                     const title = "Fallo la carga de estados!";
-                    const desc = "Por favor vuelva a intentarlo nuevamente!";
-                    // this.props.showToast(title, desc);
+                    const desc = data.message;
+                    this.props.showToast(title, desc);
                 });
             }
         });
@@ -41,12 +41,12 @@ export default class DeliveryEdit extends Component {
             if (response.ok) {
                 response.json().then(() => {
                     this.setState({current: status});
-                    // this.props.showToast("", "");
                 });
             } else {
-                response.json().then(() => {
+                response.json().then((data) => {
                     const title = "Fallo la actualizacion del estado!";
-                    // this.props.showToast(title, desc);
+					const desc = data.message;
+                    this.props.showToast(title, desc);
                 });
             }
         });

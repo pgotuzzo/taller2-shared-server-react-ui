@@ -26,10 +26,10 @@ export default class PaymentStatus extends Component {
                     this.setState({current: payment.status});
                 });
             } else {
-                response.json().then(() => {
-                    // const title = "Fallo la carga del estado actual!";
-                    // const desc = "Por favor vuelva a intentarlo nuevamente!";
-                    // this.props.showToast(title, desc);
+                response.json().then((data) => {
+                    const title = "Fallo la carga del estado actual!";
+                    const desc = data.message;
+                    this.props.showToast(title, desc);
                 });
             }
         });

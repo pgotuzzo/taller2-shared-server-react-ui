@@ -34,9 +34,9 @@ export default class AddServer extends Component {
                     this.props.dismiss();
                 });
             } else {
-                response.json().then(() => {
+                response.json().then((data) => {
                     const title = "Fallo la creacion del app servers!";
-                    const desc = "Por favor vuelva a intentarlo nuevamente!";
+                    const desc = data.message;
                     this.props.showToast(title, desc);
                 });
             }

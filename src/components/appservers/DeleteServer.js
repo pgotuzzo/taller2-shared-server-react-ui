@@ -16,9 +16,9 @@ export default class DeleteServer extends Component {
 			if (response.ok) {
                 this.props.dismiss();
             } else {
-                response.json().then(() => {
+                response.json().then((data) => {
                     const title = "Fallo la eliminacion del app servers!";
-                    const desc = "Por favor vuelva a intentarlo nuevamente!";
+                    const desc = data.message;
                     this.props.showToast(title, desc);
                 });
             }

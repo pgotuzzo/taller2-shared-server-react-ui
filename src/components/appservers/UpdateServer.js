@@ -30,8 +30,7 @@ export default class UpdateServer extends Component {
                 response.json().then((data) => {
                     const title = "Fallo la actualizacion del app server!";
                     const desc = data.message;
-					alert(desc);
-                    // this.props.showToast(title, desc);
+                    this.props.showToast(title, desc);
                 });
             }
 		});

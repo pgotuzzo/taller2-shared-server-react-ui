@@ -35,9 +35,9 @@ export default class Deliveries extends Component {
                     this.setState({deliveries: data});
                 });
             } else {
-                response.json().then(() => {
+                response.json().then((data) => {
                     const title = "Fallo la carga de envios!";
-                    const desc = "Por favor vuelva a intentarlo nuevamente!";
+                    const desc = data.message;
                     this.props.showToast(title, desc);
                 });
             }
@@ -82,10 +82,10 @@ export default class Deliveries extends Component {
         if (this.state.popUp.show) {
             switch (this.state.popUp.type) {
                 case this.POP_UP_TYPE.EDIT:
-                    popUp = <DeliveryEdit deliveryId={this.state.popUp.deliveryId}/>;
+                    popUp = <DeliveryEdit deliveryId={this.state.popUp.deliveryId} showToast={this.props.showToast}/>;
                     break;
                 case this.POP_UP_TYPE.HISTORY:
-                    popUp = <DeliveryHistory deliveryId={this.state.popUp.deliveryId}/>;
+                    popUp = <DeliveryHistory deliveryId={this.state.popUp.deliveryId} showToast={this.props.showToast}/>;
                     break;
                 default:
                     popUp = null;

@@ -22,10 +22,10 @@ export default class DeliveryHistory extends Component {
                     this.setState({history: data});
                 });
             } else {
-                response.json().then(() => {
+                response.json().then((data) => {
                     const title = "Fallo la carga de estados!";
-                    const desc = "Por favor vuelva a intentarlo nuevamente!";
-                    // this.props.showToast(title, desc);
+                    const desc = data.message;
+                    this.props.showToast(title, desc);
                 });
             }
         });
