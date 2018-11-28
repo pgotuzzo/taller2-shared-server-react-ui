@@ -27,7 +27,7 @@ export default class Home extends Component {
                     </span>
                 </div>
                 <div className={"option-box"}>
-                    <h2>Estadisticass</h2>
+                    <h2>Estadisticas</h2>
                     <span>
                         Detalla algunos datos estadisticos relevantes al uso de los App Servers
                     </span>

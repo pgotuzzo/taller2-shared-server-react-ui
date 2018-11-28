@@ -7,6 +7,7 @@ import Home from "../home/Home";
 import Deliveries from "../deliveries/Deliveries";
 import Payments from "../payments/Payments";
 import AppServers from "../appservers/AppServers";
+import Stats from "../stats/Stats";
 
 export default class Dashboard extends Component {
 
@@ -38,15 +39,15 @@ export default class Dashboard extends Component {
         let analyticsClass = defaultClass;
         switch (this.state.section) {
             case this.SECTIONS.HOME:
-                content = <Home/>;
+                content = <Home showToast={this.props.showToast}/>;
                 homeClass = selectedClass;
                 break;
             case this.SECTIONS.PAYMENTS:
-                content = <Payments/>;
+                content = <Payments showToast={this.props.showToast}/>;
                 paymentClass = selectedClass;
                 break;
             case this.SECTIONS.DELIVERIES:
-                content = <Deliveries/>;
+                content = <Deliveries showToast={this.props.showToast}/>;
                 deliveryClass = selectedClass;
                 break;
             case this.SECTIONS.APP_SERVERS:
@@ -54,6 +55,7 @@ export default class Dashboard extends Component {
                 appServerClass = selectedClass;
                 break;
             case this.SECTIONS.ANALYTICS:
+			content = <Stats showToast={this.props.showToast}/>
                 analyticsClass = selectedClass;
                 break;
         }
