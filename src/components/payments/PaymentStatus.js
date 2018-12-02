@@ -3,7 +3,7 @@ import {SharedServerService} from "../../di";
 
 export default class PaymentStatus extends Component {
 
-    OPTIONS = {PAYED: "PAGADO", PENDING: "PENDIENTE", CANCELED: "CANCELADO"};
+    OPTIONS = {PAYED: "CONFIRMADO", PENDING: "PENDIENTE", CANCELED: "CANCELADO"};
 
     constructor(props) {
         super(props);
@@ -41,12 +41,13 @@ export default class PaymentStatus extends Component {
             if (response.ok) {
                 response.json().then(() => {
                     this.setState({current: status});
-                    // this.props.showToast("", "");
+                    this.props.showToast("Exito!", "Se actualizó el estado con éxito.");
                 });
             } else {
-                response.json().then(() => {
+                response.json().then((data) => {
                     const title = "Fallo la actualizacion del estado!";
-                    // this.props.showToast(title, desc);
+					const desc = data.message;
+                    this.props.showToast(title, desc);
                 });
             }
         });

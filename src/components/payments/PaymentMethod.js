@@ -31,10 +31,11 @@ export default class PaymentMethod extends Component {
                     const payment = data[0];
                     this.setState(
                         {
-                            type: payment.paymentMethod.method,
-                            expiration_month: this.safeProperty(payment.paymentMethod, "expiration_month"),
-                            expiration_year: this.safeProperty(payment.paymentMethod, "expiration_year"),
-                            card_number: this.safeProperty(payment.paymentMethod, "number")
+                            type: payment.paymentMethod.payment_method,
+                            expiration_date: this.safeProperty(payment.paymentMethod, "expiration_date"),
+                            card_number: this.safeProperty(payment.paymentMethod, "card_number"),
+							security_code: this.safeProperty(payment.paymentMethod, "security_code"),
+							cardholder_name: this.safeProperty(payment.paymentMethod, "cardholder_name")
                         });
                 });
             } else {
@@ -50,30 +51,46 @@ export default class PaymentMethod extends Component {
     render() {
         let expirationHeader = null;
         let expirationContent = null;
-        if (this.state.expiration_month !== null && this.state.expiration_year !== null) {
-            expirationHeader = <th>Fecha de vencimiento</th>;
-            expirationContent =
-                <td>{this.state.expiration_month + "/" + this.state.expiration_year}</td>;
-        }
-        let cardNumberHeader = null;
+		let cardNumberHeader = null;
         let cardNumberContent = null;
-        if (this.state.card_number !== null) {
+        if (this.state.card_number) {
             cardNumberHeader = <th>Numero de tarjeta</th>;
             cardNumberContent = <td>{this.state.card_number}</td>;
+        }
+        if (this.state.expiration_date) {
+            expirationHeader = <th>Fecha de vencimiento</th>;
+            expirationContent =
+                <td>{this.state.expiration_date}</td>;
+        }
+		let securityCodeHeader = null;
+        let securityCodeContent = null;
+        if (this.state.security_code) {
+            securityCodeHeader = <th>Código de Seguridad</th>;
+            securityCodeContent = <td>{this.state.security_code}</td>;
+        }
+		let cardholderNameHeader = null;
+        let cardholderNameContent = null;
+        if (this.state.security_code) {
+            cardholderNameHeader = <th>Titular de la tarjeta</th>;
+            cardholderNameContent = <td>{this.state.cardholder_name}</td>;
         }
         return <div>
             <table>
                 <tr>
                     <th>Id</th>
                     <th>Tipo</th>
+					{cardNumberHeader}
                     {expirationHeader}
-                    {cardNumberHeader}
+					{securityCodeHeader}
+					{cardholderNameHeader}
                 </tr>
                 <tr>
                     <td>{this.props.paymentId}</td>
                     <td>{this.state.type}</td>
+					{cardNumberContent}
                     {expirationContent}
-                    {cardNumberContent}
+					{securityCodeContent}
+					{cardholderNameContent}
                 </tr>
             </table>
 
