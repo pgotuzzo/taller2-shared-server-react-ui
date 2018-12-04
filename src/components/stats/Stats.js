@@ -9,14 +9,17 @@ export default class Stats extends Component {
         super(props);
         // Initial State
         this.state = {
-            requests: []
+            requests: [],
+			status: []
         };
         // Events Listeners
         this.fetchRequests = this.fetchRequests.bind(this);
+		this.fetchStatus = this.fetchStatus.bind(this);
     }
 
     componentDidMount() {
         this.fetchRequests();
+		this.fetchStatus();
     }
 
     fetchRequests() {
@@ -35,6 +38,30 @@ export default class Stats extends Component {
         });
     }
 
+	fetchStatus() {
+        SharedServerService.getServersStates(response => {
+			if (response.ok) {
+                response.json().then((data) => {
+					data.unshift({
+						name: 'Shared Server',
+						status: 'OK'
+					});
+					console.log(data);
+                    this.setState({status: data});
+                });
+            } else {
+                response.json().then(() => {
+                    var server = {
+						name: 'Shared Server',
+						status: 'ERROR'
+					}
+					this.setState({status: [server]});
+                });
+            }
+
+        });
+    }
+
     render() {
         const requests = this.state.requests.map((item) => {
             return <tr>
@@ -46,20 +73,37 @@ export default class Stats extends Component {
                 <td>{item.max}</td>
             </tr>
         });
+		const status = this.state.status.map((item) => {
+			return <tr>
+                <td>{item.name}</td>
+                <td>{item.status}</td>
+            </tr>
+		});
         return (
-            <div>
-                <table>
-                    <tr>
-                        <th>Endpoint</th>
-                        <th>Status Code</th>
-                        <th>Total requests</th>
-                        <th>Avg Time</th>
-                        <th>Min Time</th>
-                        <th>Max Time</th>
-                    </tr>
-                    {requests}
-                </table>
-            </div>
+			<div>
+				<div>
+	                <table>
+	                    <tr>
+	                        <th>Server</th>
+	                        <th>Status</th>
+	                    </tr>
+	                    {status}
+	                </table>
+	            </div>
+	            <div>
+	                <table>
+	                    <tr>
+	                        <th>Endpoint</th>
+	                        <th>Status Code</th>
+	                        <th>Total requests</th>
+	                        <th>Avg Time</th>
+	                        <th>Min Time</th>
+	                        <th>Max Time</th>
+	                    </tr>
+	                    {requests}
+	                </table>
+	            </div>
+			</div>
         );
     }
 };
