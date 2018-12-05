@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import Moment from 'react-moment';
 import {SharedServerService} from "../../di";
 import InfoImg from "../../images/ic_info.png";
 import EditImg from "../../images/ic_settings.png";
@@ -84,6 +85,7 @@ export default class Payments extends Component {
                 <td><img className={"img-btn"} alt="" src={InfoImg}
                          onClick={() => this.showPaymentMethod(item.transaction_id)}/></td>
                 <td>{item.status}</td>
+				<td><Moment date={item.updateat} format="DD/MM/YYYY HH:mm:SS" /></td>
                 <td><img className={"img-btn"} alt="" src={EditImg}
                          onClick={() => this.showStatus(item.transaction_id)}/></td>
             </tr>
@@ -110,6 +112,7 @@ export default class Payments extends Component {
                         <th>Monto</th>
                         <th>Metodo de pago</th>
                         <th>Estado Actual</th>
+                        <th>Última actualización</th>
                         <th>Modificar</th>
                     </tr>
                     {payments}

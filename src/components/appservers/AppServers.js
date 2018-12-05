@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import Moment from 'react-moment';
 import {SharedServerService} from "../../di";
 import "./AppServers.css"
 import RemoveImg from "../../images/ic_trash.png";
@@ -98,8 +99,7 @@ export default class AppServers extends Component {
                 <td>{item.name}</td>
                 <td>{item._rev}</td>
                 <td>{item.createdBy}</td>
-                <td>{item.createdTime}</td>
-                <td>{item.lastConnection}</td>
+                <td><Moment date={item.createdTime} format="DD/MM/YYYY HH:mm:SS" /></td>
                 <td><img className={"img-btn"} alt="" src={EditImg}
                          onClick={() => this.editServer(item.id, item.name, item._rev)}/></td>
                 <td><img className={"img-btn"} alt="" src={RemoveImg}
@@ -131,7 +131,6 @@ export default class AppServers extends Component {
                         <th>Revision</th>
                         <th>Creador</th>
                         <th>Fecha de Creacion</th>
-                        <th>Ultima conexion</th>
                         <th>Editar</th>
                         <th>Eliminar</th>
                     </tr>
