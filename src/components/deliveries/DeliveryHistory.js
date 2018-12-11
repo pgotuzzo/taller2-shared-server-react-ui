@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import Moment from 'react-moment';
 import {SharedServerService} from "../../di";
 
 export default class DeliveryHistory extends Component {
@@ -35,7 +36,7 @@ export default class DeliveryHistory extends Component {
         const history = this.state.history.map((item) => {
             return <tr>
                 <td>{item.status}</td>
-                <td>{item.updateat}</td>
+				<td><Moment date={item.updateat} format="DD/MM/YYYY HH:mm:SS" /></td>
             </tr>
         });
         return (

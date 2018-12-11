@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {SharedServerService} from "../../di";
+import "./PaymentMethod.css"
 
 export default class PaymentMethod extends Component {
 
@@ -75,7 +76,7 @@ export default class PaymentMethod extends Component {
             cardholderNameContent = <td>{this.state.cardholder_name}</td>;
         }
         return <div>
-            <table>
+            <table className="metodo-pago">
                 <tr>
                     <th>Id</th>
                     <th>Tipo</th>
