@@ -2,9 +2,10 @@ import React, {Component} from 'react';
 import {BrowserRouter as Router, Route} from "react-router-dom";
 import Login from "./login/Login";
 import Dashboard from "./dashboard/Dashboard";
-import {Logger, Session} from "../di";
+import {Logger, Session, SharedServerService} from "../di";
 import Envios from "./deliveries/Deliveries";
 import Toast from "./alert/Toast";
+import Loader from 'react-loader-spinner'
 import "./App.css";
 
 export default class App extends Component {
@@ -22,13 +23,20 @@ export default class App extends Component {
                     title: "",
                     description: ""
                 }
-            }
+            },
+			loader: {
+				show: false
+			}
         };
         // Events listeners
         this.onUserSignedIn = this.onUserSignedIn.bind(this);
         this.onUserSignedOut = this.onUserSignedOut.bind(this);
         this.showToast = this.showToast.bind(this);
         this.hideToast = this.hideToast.bind(this);
+		this.showLoader = this.showLoader.bind(this);
+        this.hideLoader = this.hideLoader.bind(this);
+		SharedServerService.setShowLoader(this.showLoader);
+		SharedServerService.setHideLoader(this.hideLoader);
     }
 
     onUserSignedIn(userName, token) {
@@ -71,6 +79,22 @@ export default class App extends Component {
         })
     }
 
+	showLoader() {
+		this.setState({
+			loader: {
+				show: true
+			}
+		})
+	}
+
+	hideLoader() {
+		this.setState({
+			loader: {
+				show: false
+			}
+		})
+	}
+
     render() {
         const isSigned = this.state.signed;
 
@@ -94,7 +118,6 @@ export default class App extends Component {
                 <div>
                     <Route exact path="/" render={() => <Dashboard onUserSignedOut={this.onUserSignedOut}
                                                                    showToast={this.showToast}/>}/>
-                    <Route path="/envios" component={Envios}/>
                 </div>
             </Router>
         }
@@ -106,9 +129,12 @@ export default class App extends Component {
             </div>
             : null;
 
+		let loader = this.state.loader.show ? <Loader type="Puff" color="#00BFFF" height="100" width="100" /> : null;
+
         return <div>
             {content}
             {toast}
+			{loader}
         </div>
     }
 }

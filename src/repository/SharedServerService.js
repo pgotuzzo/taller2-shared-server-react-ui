@@ -2,9 +2,12 @@ import {Session} from "../di";
 
 export var SharedServerServiceSingleton = (function () {
     function SharedServerService() {
+		var _showLoader;
+		var _hideLoader;
 
         // Public methods
         this.getToken = function (userName, password, promise) {
+			_showLoader();
             const url = BASE_URL + ENDPOINT.TOKEN;
             const data = {
                 username: userName,
@@ -16,30 +19,42 @@ export var SharedServerServiceSingleton = (function () {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
-            }).then(promise);
+            }).then((data) => {
+				promise(data);
+				_hideLoader();
+			});
         };
 
         this.getDeliveries = function (promise) {
+			_showLoader();
             const url = BASE_URL + ENDPOINT.DELIVERIES;
             fetch(url, {
 				headers: new Headers({
                     'Content-Type': 'application/json',
 					'Authorization': 'Bearer ' + Session.token
                 })
-			}).then(promise);
+			}).then((data) => {
+				promise(data);
+				_hideLoader();
+			});
         };
 
         this.getDelivery = function (deliveryId, promise) {
+			_showLoader();
             const url = BASE_URL + ENDPOINT.DELIVERIES + deliveryId;
             fetch(url, {
 				headers: new Headers({
                     'Content-Type': 'application/json',
 					'Authorization': 'Bearer ' + Session.token
                 })
-			}).then(promise);
+			}).then((data) => {
+				promise(data);
+				_hideLoader();
+			});
         };
 
         this.setDeliveryStatus = function (deliveryId, deliveryStatus, promise) {
+			_showLoader();
             const url = BASE_URL + ENDPOINT.DELIVERIES + deliveryId;
             const data = {
                 id: deliveryId,
@@ -52,30 +67,42 @@ export var SharedServerServiceSingleton = (function () {
 					'Authorization': 'Bearer ' + Session.token
                 },
                 body: JSON.stringify(data)
-            }).then(promise);
+            }).then((data) => {
+				promise(data);
+				_hideLoader();
+			});
         };
 
         this.getPayments = function (promise) {
+			_showLoader();
             const url = BASE_URL + ENDPOINT.PAYMENTS;
             fetch(url, {
 				headers: new Headers({
                     'Content-Type': 'application/json',
 					'Authorization': 'Bearer ' + Session.token
                 })
-			}).then(promise);
+			}).then((data) => {
+				promise(data);
+				_hideLoader();
+			});
         };
 
         this.getPayment = function (paymentId, promise) {
+			_showLoader();
             const url = BASE_URL + ENDPOINT.PAYMENTS_BY_ID + paymentId;
             fetch(url, {
 				headers: new Headers({
                     'Content-Type': 'application/json',
 					'Authorization': 'Bearer ' + Session.token
                 })
-			}).then(promise);
+			}).then((data) => {
+				promise(data);
+				_hideLoader();
+			});
         };
 
         this.setPaymentStatus = function (paymentId, paymentStatus, promise) {
+			_showLoader();
             const url = BASE_URL + ENDPOINT.PAYMENTS_BY_ID + paymentId;
             const data = {
                 transaction_id: paymentId,
@@ -88,20 +115,28 @@ export var SharedServerServiceSingleton = (function () {
 					'Authorization': 'Bearer ' + Session.token
                 },
                 body: JSON.stringify(data)
-            }).then(promise);
+            }).then((data) => {
+				promise(data);
+				_hideLoader();
+			});
         };
 
         this.getAppServers = function (promise) {
+			_showLoader();
             const url = BASE_URL + ENDPOINT.APP_SERVERS;
             fetch(url, {
 				headers: new Headers({
                     'Content-Type': 'application/json',
 					'Authorization': 'Bearer ' + Session.token
                 })
-			}).then(promise);
+			}).then((data) => {
+				promise(data);
+				_hideLoader();
+			});
         };
 
         this.addAppServers = function (userName, serverName, promise) {
+			_showLoader();
             const url = BASE_URL + ENDPOINT.APP_SERVERS;
             const data = {
                 createdBy: userName,
@@ -114,10 +149,14 @@ export var SharedServerServiceSingleton = (function () {
 					'Authorization': 'Bearer ' + Session.token
                 },
                 body: JSON.stringify(data)
-            }).then(promise);
+            }).then((data) => {
+				promise(data);
+				_hideLoader();
+			});
         };
 
 		this.deleteAppServer = function (serverId, promise) {
+			_showLoader();
 			const url = BASE_URL + ENDPOINT.APP_SERVERS + serverId;
 			fetch(url, {
 				method: "DELETE",
@@ -125,10 +164,14 @@ export var SharedServerServiceSingleton = (function () {
                     'Content-Type': 'application/json',
 					'Authorization': 'Bearer ' + Session.token
                 })
-			}).then(promise);
+			}).then((data) => {
+				promise(data);
+				_hideLoader();
+			});
 		}
 
 		this.updateAppServer = function (serverId, serverName, rev, promise) {
+			_showLoader();
 			const url = BASE_URL + ENDPOINT.APP_SERVERS + serverId;
 			const data = {
 				name: serverName,
@@ -141,27 +184,46 @@ export var SharedServerServiceSingleton = (function () {
 					'Authorization': 'Bearer ' + Session.token
                 }),
                 body: JSON.stringify(data)
-			}).then(promise);
+			}).then((data) => {
+				promise(data);
+				_hideLoader();
+			});
 		}
 
 		this.getRequests = function(promise) {
+			_showLoader();
 			const url = BASE_URL + ENDPOINT.STATS;
 			fetch(url, {
 				headers: new Headers({
                     'Content-Type': 'application/json',
 					'Authorization': 'Bearer ' + Session.token
                 })
-			}).then(promise);
+			}).then((data) => {
+				promise(data);
+				_hideLoader();
+			});
 		}
 
 		this.getServersStates = function(promise) {
+			_showLoader();
 			const url = BASE_URL + ENDPOINT.SERVERS_STATUS;
 			fetch(url, {
 				headers: new Headers({
                     'Content-Type': 'application/json',
 					'Authorization': 'Bearer ' + Session.token
                 })
-			}).then(promise);
+			}).then((data) => {
+				promise(data);
+				_hideLoader();
+			});
+		}
+
+		this.setShowLoader = function(showLoader) {
+			_showLoader = showLoader;
+		}
+
+		this.setHideLoader = function(hideLoader) {
+			_hideLoader = hideLoader;
 		}
 
         const BASE_URL = "https://shared-server-tallerii.herokuapp.com";

@@ -70,3 +70,9 @@ td {
     overflow: hidden;
     font-size: 20px;
 }
+
+svg {
+	top: calc(50% - 50px);
+	right: calc(50% - 50px);
+	position: fixed;
+}
