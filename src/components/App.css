@@ -11,6 +11,12 @@ table {
     margin: 20px auto 0;
 }
 
+.filter {
+    width: 50%;
+    border-collapse: collapse;
+    margin: 20px auto 0;
+}
+
 th {
     height: 40px;
     background-color: #222222;

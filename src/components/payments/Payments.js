@@ -15,16 +15,24 @@ export default class Payments extends Component {
         // Initial State
         this.state = {
             payments: [],
+			filteredPayments: [],
             popUp: {
                 show: false,
                 type: null,
                 paymentId: null,
-            }
+            },
+			filter: {
+				id: '',
+				moneda: '',
+				metodo: '',
+				estado: ''
+			}
         };
         // Events Listeners
         this.fetchPayments = this.fetchPayments.bind(this);
         this.showPaymentMethod = this.showPaymentMethod.bind(this);
         this.onPopUpDismiss = this.onPopUpDismiss.bind(this);
+		this.filterPayments = this.filterPayments.bind(this);
     }
 
     componentDidMount() {
@@ -36,6 +44,7 @@ export default class Payments extends Component {
             if (response.ok) {
                 response.json().then((data) => {
                     this.setState({payments: data});
+					this.filterPayments();
                 });
             } else {
                 response.json().then((data) => {
@@ -76,9 +85,41 @@ export default class Payments extends Component {
         this.setState({popUp: {show: false}});
     }
 
+	filterPayments() {
+		const filteredPayments = this.state.payments.filter((item) => {
+			var isValid = true;
+			if (this.state.filter.id)
+				isValid &= item.transaction_id.indexOf(this.state.filter.id) != -1;
+			if (this.state.filter.moneda)
+				isValid &= item.currency.toLowerCase().indexOf(this.state.filter.moneda.toLowerCase()) != -1;
+			if (this.state.filter.metodo)
+				isValid &= item.paymentMethod.payment_method.toLowerCase().indexOf(this.state.filter.metodo.toLowerCase()) != -1;
+			if (this.state.filter.estado)
+				isValid &= item.status.toLowerCase().indexOf(this.state.filter.estado.toLowerCase()) != -1;
+			return isValid;
+		});
+		this.setState({filteredPayments: filteredPayments});
+	}
+
+	onFilterChange(property, value) {
+		var newFilter = this.state.filter;
+		newFilter[property] = value;
+		this.setState({
+				filter: newFilter
+		});
+		setTimeout(
+		    function() {
+		        this.filterPayments();
+		    }
+		    .bind(this),
+		    100
+		);
+		this.filterPayments();
+	}
+
     render() {
-        const payments = this.state.payments.map((item) => {
-            return <tr>
+        const payments = this.state.filteredPayments.map((item) => {
+            return <tr key={item.transaction_id}>
                 <td>{item.transaction_id}</td>
                 <td>{item.currency}</td>
                 <td>{item.value}</td>
@@ -105,17 +146,27 @@ export default class Payments extends Component {
         }
         return (
             <div>
-                <table>
-                    <tr>
-                        <th>ID</th>
-                        <th>Moneda</th>
-                        <th>Monto</th>
-                        <th>Metodo de pago</th>
-                        <th>Estado Actual</th>
-                        <th>Última actualización</th>
-                        <th>Modificar</th>
-                    </tr>
-                    {payments}
+				<div className="filter">
+					<input placeholder={"ID"} onChange={e => this.onFilterChange('id', e.target.value)}/>
+					<input placeholder={"Moneda"} onChange={e => this.onFilterChange('moneda', e.target.value)}/>
+					<input placeholder={"Metodo de Pago"} onChange={e => this.onFilterChange('metodo', e.target.value)}/>
+					<input placeholder={"Estado"} onChange={e => this.onFilterChange('estado', e.target.value)}/>
+				</div>
+				<table>
+					<thead>
+	                    <tr>
+	                        <th>ID</th>
+	                        <th>Moneda</th>
+	                        <th>Monto</th>
+	                        <th>Metodo de pago</th>
+	                        <th>Estado Actual</th>
+	                        <th>Última actualización</th>
+	                        <th>Modificar</th>
+	                    </tr>
+					</thead>
+					<tbody>
+                    	{payments}
+					</tbody>
                 </table>
                 <div className={this.state.popUp.show ? "pop-up" : null} onClick={this.onPopUpDismiss}>
                     <div onClick={e => e.stopPropagation()}>
