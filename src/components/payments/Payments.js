@@ -82,7 +82,7 @@ export default class Payments extends Component {
                 <td>{item.transaction_id}</td>
                 <td>{item.currency}</td>
                 <td>{item.value}</td>
-                <td><img className={"img-btn"} alt="" src={InfoImg}
+                <td>{item.paymentMethod.payment_method} <img className={"img-btn"} alt="" src={InfoImg}
                          onClick={() => this.showPaymentMethod(item.transaction_id)}/></td>
                 <td>{item.status}</td>
 				<td><Moment date={item.updateat} format="DD/MM/YYYY HH:mm:SS" /></td>
