@@ -83,24 +83,32 @@ export default class Stats extends Component {
 			<div>
 				<div>
 	                <table>
-	                    <tr>
-	                        <th>Server</th>
-	                        <th>Status</th>
-	                    </tr>
-	                    {status}
+						<thead>
+		                    <tr>
+		                        <th>Server</th>
+		                        <th>Status</th>
+		                    </tr>
+						</thead>
+						<tbody>
+							{status}
+						</tbody>
 	                </table>
 	            </div>
 	            <div>
 	                <table>
-	                    <tr>
-	                        <th>Endpoint</th>
-	                        <th>Status Code</th>
-	                        <th>Total requests</th>
-	                        <th>Avg Time</th>
-	                        <th>Min Time</th>
-	                        <th>Max Time</th>
-	                    </tr>
-	                    {requests}
+						<thead>
+		                    <tr>
+		                        <th>Endpoint</th>
+		                        <th>Status Code</th>
+		                        <th>Total requests</th>
+		                        <th>Avg Time</th>
+		                        <th>Min Time</th>
+		                        <th>Max Time</th>
+		                    </tr>
+						</thead>
+						<tbody>
+		                    {requests}
+						</tbody>
 	                </table>
 	            </div>
 			</div>

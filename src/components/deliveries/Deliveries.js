@@ -13,15 +13,21 @@ export default class Deliveries extends Component {
         super(props);
         this.state = {
             deliveries: [],
+			filteredDeliveries: [],
             popUp: {
                 show: false,
-            }
+            },
+			filter: {
+				id: '',
+				estado: ''
+			}
         }
         ;
         // Events Listeners
         this.fetchDeliveries = this.fetchDeliveries.bind(this);
         this.showHistory = this.showHistory.bind(this);
         this.onPopUpDismiss = this.onPopUpDismiss.bind(this);
+		this.filterDeliveries = this.filterDeliveries.bind(this);
     }
 
     componentDidMount() {
@@ -33,6 +39,7 @@ export default class Deliveries extends Component {
             if (response.ok) {
                 response.json().then((data) => {
                     this.setState({deliveries: data});
+					this.filterDeliveries();
                 });
             } else {
                 response.json().then((data) => {
@@ -67,8 +74,35 @@ export default class Deliveries extends Component {
         });
     }
 
+	filterDeliveries() {
+		const filteredDeliveries = this.state.deliveries.filter((item) => {
+			var isValid = true;
+			if (this.state.filter.id)
+				isValid &= item.id.toString().indexOf(this.state.filter.id) != -1;
+			if (this.state.filter.estado)
+				isValid &= item.status.toLowerCase().indexOf(this.state.filter.estado.toLowerCase()) != -1;
+			return isValid;
+		});
+		this.setState({filteredDeliveries: filteredDeliveries});
+	}
+
+	onFilterChange(property, value) {
+		var newFilter = this.state.filter;
+		newFilter[property] = value;
+		this.setState({
+				filter: newFilter
+		});
+		setTimeout(
+		    function() {
+		        this.filterDeliveries();
+		    }
+		    .bind(this),
+		    100
+		);
+	}
+
     render() {
-        const deliveries = this.state.deliveries.map((item) => {
+        const deliveries = this.state.filteredDeliveries.map((item) => {
             return <tr>
                 <td>{item.id}</td>
                 <td>{item.status}</td>
@@ -93,14 +127,22 @@ export default class Deliveries extends Component {
         }
         return (
             <div>
+				<div className="filter">
+					<input placeholder={"ID"} onChange={e => this.onFilterChange('id', e.target.value)}/>
+					<input placeholder={"Estado"} onChange={e => this.onFilterChange('estado', e.target.value)}/>
+				</div>
                 <table>
-                    <tr>
-                        <th>ID</th>
-                        <th>Estado Actual</th>
-                        <th>Actualizar</th>
-                        <th>Historial</th>
-                    </tr>
-                    {deliveries}
+					<thead>
+	                    <tr>
+	                        <th>ID</th>
+	                        <th>Estado Actual</th>
+	                        <th>Actualizar</th>
+	                        <th>Historial</th>
+	                    </tr>
+					</thead>
+					<tbody>
+                    	{deliveries}
+					</tbody>
                 </table>
                 <div className={this.state.popUp.show ? "pop-up" : null} onClick={this.onPopUpDismiss}>
                     <div onClick={e => e.stopPropagation()}>

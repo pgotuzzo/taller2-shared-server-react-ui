@@ -17,9 +17,15 @@ export default class AppServers extends Component {
         super(props);
         this.state = {
             servers: [],
+			filteredServers: [],
             popUp: {
                 show: false,
-            }
+            },
+			filter: {
+				id: '',
+				nombre: '',
+				creador: ''
+			}
         }
         ;
         // Events Listeners
@@ -28,6 +34,7 @@ export default class AppServers extends Component {
         this.editServer = this.editServer.bind(this);
         this.removeServer = this.removeServer.bind(this);
         this.onPopUpDismiss = this.onPopUpDismiss.bind(this);
+		this.filterServers = this.filterServers.bind(this);
     }
 
     componentDidMount() {
@@ -39,6 +46,7 @@ export default class AppServers extends Component {
             if (response.ok) {
                 response.json().then((data) => {
                     this.setState({servers: data.servers});
+					this.filterServers();
                 });
             } else {
                 response.json().then((data) => {
@@ -92,8 +100,37 @@ export default class AppServers extends Component {
         });
     }
 
+	filterServers() {
+		const filteredServers = this.state.servers.filter((item) => {
+			var isValid = true;
+			if (this.state.filter.id)
+				isValid &= item.id.toString().indexOf(this.state.filter.id) != -1;
+			if (this.state.filter.nombre)
+				isValid &= item.name.toLowerCase().indexOf(this.state.filter.nombre.toLowerCase()) != -1;
+			if (this.state.filter.creador)
+				isValid &= item.createdBy.toLowerCase().indexOf(this.state.filter.creador.toLowerCase()) != -1;
+			return isValid;
+		});
+		this.setState({filteredServers: filteredServers});
+	}
+
+	onFilterChange(property, value) {
+		var newFilter = this.state.filter;
+		newFilter[property] = value;
+		this.setState({
+				filter: newFilter
+		});
+		setTimeout(
+		    function() {
+		        this.filterServers();
+		    }
+		    .bind(this),
+		    100
+		);
+	}
+
     render() {
-        const servers = this.state.servers.map((item) => {
+        const servers = this.state.filteredServers.map((item) => {
             return <tr>
                 <td>{item.id}</td>
                 <td>{item.name}</td>
@@ -124,17 +161,26 @@ export default class AppServers extends Component {
         }
         return (
             <div>
+				<div className="filter">
+					<input placeholder={"ID"} onChange={e => this.onFilterChange('id', e.target.value)}/>
+					<input placeholder={"Nombre"} onChange={e => this.onFilterChange('nombre', e.target.value)}/>
+					<input placeholder={"Creador"} onChange={e => this.onFilterChange('creador', e.target.value)}/>
+				</div>
                 <table>
-                    <tr>
-                        <th>ID</th>
-                        <th>Nombre</th>
-                        <th>Revision</th>
-                        <th>Creador</th>
-                        <th>Fecha de Creacion</th>
-                        <th>Editar</th>
-                        <th>Eliminar</th>
-                    </tr>
-                    {servers}
+					<thead>
+	                    <tr>
+	                        <th>ID</th>
+	                        <th>Nombre</th>
+	                        <th>Revision</th>
+	                        <th>Creador</th>
+	                        <th>Fecha de Creacion</th>
+	                        <th>Editar</th>
+	                        <th>Eliminar</th>
+	                    </tr>
+					</thead>
+					<tbody>
+                    	{servers}
+					</tbody>
                 </table>
                 <div className={"add-btn-box"}>
                     <img className={"img-btn"} alt="" src={AddImg}

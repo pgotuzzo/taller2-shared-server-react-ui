@@ -41,7 +41,6 @@ export default class PaymentStatus extends Component {
             if (response.ok) {
                 response.json().then(() => {
                     this.setState({current: status});
-                    this.props.showToast("Exito!", "Se actualizó el estado con éxito.");
                 });
             } else {
                 response.json().then((data) => {

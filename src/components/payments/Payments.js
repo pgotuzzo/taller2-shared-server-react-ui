@@ -114,7 +114,6 @@ export default class Payments extends Component {
 		    .bind(this),
 		    100
 		);
-		this.filterPayments();
 	}
 
     render() {
