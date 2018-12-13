@@ -218,6 +218,67 @@ export var SharedServerServiceSingleton = (function () {
 			});
 		}
 
+		this.getRules = function (promise) {
+			_showLoader();
+            const url = BASE_URL + ENDPOINT.RULES;
+            fetch(url, {
+				headers: new Headers({
+                    'Content-Type': 'application/json',
+					'Authorization': 'Bearer ' + Session.token
+                })
+			}).then((data) => {
+				promise(data);
+				_hideLoader();
+			});
+        };
+
+		this.addRule = function (rule, promise) {
+			_showLoader();
+            const url = BASE_URL + ENDPOINT.RULES;
+            fetch(url, {
+				method: "POST",
+				headers: new Headers({
+                    'Content-Type': 'application/json',
+					'Authorization': 'Bearer ' + Session.token
+                }),
+                body: JSON.stringify(rule)
+			}).then((data) => {
+				promise(data);
+				_hideLoader();
+			});
+        };
+
+		this.updateRule = function (rule, promise) {
+			_showLoader();
+            const url = BASE_URL + ENDPOINT.RULES + rule.id;
+            fetch(url, {
+				method: "PUT",
+				headers: new Headers({
+                    'Content-Type': 'application/json',
+					'Authorization': 'Bearer ' + Session.token
+                }),
+                body: JSON.stringify(rule)
+			}).then((data) => {
+				promise(data);
+				_hideLoader();
+			});
+        };
+
+		this.deleteRule = function (ruleId, promise) {
+			_showLoader();
+			const url = BASE_URL + ENDPOINT.RULES + ruleId;
+			fetch(url, {
+				method: "DELETE",
+				headers: new Headers({
+                    'Content-Type': 'application/json',
+					'Authorization': 'Bearer ' + Session.token
+                })
+			}).then((data) => {
+				promise(data);
+				_hideLoader();
+			});
+		};
+
 		this.setShowLoader = function(showLoader) {
 			_showLoader = showLoader;
 		}
@@ -235,7 +296,8 @@ export var SharedServerServiceSingleton = (function () {
             PAYMENTS_METHODS: "/payments/methods/",
             APP_SERVERS: "/servers/",
 			STATS: "/report/requests/",
-			SERVERS_STATUS: '/report/status'
+			SERVERS_STATUS: '/report/status',
+			RULES: '/rules/'
         }
 
     }

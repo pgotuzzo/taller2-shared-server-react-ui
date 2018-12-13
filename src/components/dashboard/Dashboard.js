@@ -8,10 +8,11 @@ import Deliveries from "../deliveries/Deliveries";
 import Payments from "../payments/Payments";
 import AppServers from "../appservers/AppServers";
 import Stats from "../stats/Stats";
+import Rules from "../rules/Rules";
 
 export default class Dashboard extends Component {
 
-    SECTIONS = {"HOME": 0, "PAYMENTS": 1, "DELIVERIES": 2, "APP_SERVERS": 3, "ANALYTICS": 4};
+    SECTIONS = {"HOME": 0, "PAYMENTS": 1, "DELIVERIES": 2, "APP_SERVERS": 3, "ANALYTICS": 4, "RULES": 5};
 
     constructor(props) {
         super(props);
@@ -37,6 +38,7 @@ export default class Dashboard extends Component {
         let deliveryClass = defaultClass;
         let appServerClass = defaultClass;
         let analyticsClass = defaultClass;
+        let rulesClass = defaultClass;
         switch (this.state.section) {
             case this.SECTIONS.HOME:
                 content = <Home showToast={this.props.showToast}/>;
@@ -57,6 +59,10 @@ export default class Dashboard extends Component {
             case this.SECTIONS.ANALYTICS:
 			content = <Stats showToast={this.props.showToast}/>
                 analyticsClass = selectedClass;
+                break;
+			case this.SECTIONS.RULES:
+				content = <Rules showToast={this.props.showToast}/>
+                rulesClass = selectedClass;
                 break;
         }
         return (
@@ -82,6 +88,9 @@ export default class Dashboard extends Component {
                             </div>
                             <div className={analyticsClass} onClick={() => this.showSection(this.SECTIONS.ANALYTICS)}>
                                 <span>Estadisticas</span>
+                            </div>
+							<div className={rulesClass} onClick={() => this.showSection(this.SECTIONS.RULES)}>
+                                <span>Reglas</span>
                             </div>
                         </div>
                         <div className={"box-right"}>
